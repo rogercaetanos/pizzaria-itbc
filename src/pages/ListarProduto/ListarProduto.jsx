@@ -1,8 +1,44 @@
+import React, {useState, useEffect} from "react"
+import api from "../../services/api"
+
+
 import MenuFuncionario from "../MenuFuncionario/MenuFuncionario"
+
+
 
 
 const ListarProduto = () => {
 
+  // useState : Gerenciar estado de uma variável
+  // Exemplo: Declare uma variável chamada número iniciando o valor com 0
+  //          const[numero, setNumero] = useState(0)    -> a função "setNumero" é utilizada para alterar o valor da variável "numero"
+
+  // useEffect : Executar ações após a rederização da página. Exemplo: Acessar API´s, rodar cronômetros, executar ações à partir de cliques
+
+  // iniciando uma variável produto com um array vazio "[]"
+
+  const [produtos, setProdutos] = useState([])
+
+  useEffect(()=>{
+   api
+   .get("/produtos")
+   .then((response)=>{
+    // deu certo :)
+    // console.log(response.data.data)
+    setProdutos(response.data.data)
+    
+    //Obs: response.data => Resultado da consulta
+    //     data          => Uma propriedade da consulta
+
+   })
+   .catch((error)=>{
+    // deu errado :(
+    console.error("Erro ao buscar a lista de produtos. ", error)
+
+   })
+  }, [])
+
+/*
     const arrayProdutos = [
     {
         id: 1,
@@ -23,7 +59,7 @@ const ListarProduto = () => {
         descricao: "Pizza de frango com catupiry"
     }
 
-  ]
+  ]  */
 
     return (
 
@@ -42,7 +78,7 @@ const ListarProduto = () => {
             </tr> 
           </thead> 
           <tbody> 
-            { arrayProdutos.map((produto) => (  
+            { produtos.map((produto) => (  
                 <tr key={produto.id}> 
                 <td style={{ fontSize: "13px" }}>{produto.nome}</td>  
                 <td style={{ fontSize: "13px" }}>
