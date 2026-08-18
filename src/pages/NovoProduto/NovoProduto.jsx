@@ -42,7 +42,9 @@ const NovoProduto = () => {
             "Content-Type": "application/json"
         })
         alert(`${response.data.data.nome} cadastrado com sucesso!`)
-        
+        setNome("")
+        setPrecoVenda("")
+        setDescricao("")   
      } catch (error) {
         console.error(`Não foi possível salvar o produto ${error}`)
      }
